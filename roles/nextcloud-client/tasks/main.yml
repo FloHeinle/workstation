@@ -1,0 +1,4 @@
+---
+
+- import_tasks: nextcloud-client.yml
+  tags: [nextcloud-client]

@@ -1,0 +1,20 @@
+---
+
+- name: Install key (apt)
+  become: yes
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg.asc"
+    state: present
+
+- name: Add repository
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: Install
+  become: yes
+  apt:
+    name:
+      - kubectl
+    state: present
+    update_cache: true

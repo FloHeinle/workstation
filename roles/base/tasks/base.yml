@@ -1,0 +1,21 @@
+---
+
+- name: Set username
+  set_fact:
+    username: "{{ lookup('env', 'USER') }}"
+
+- name: Ensure Ubuntu universe repo is enabled
+  apt_repository:
+    repo: "deb http://de.archive.ubuntu.com/ubuntu {{ ansible_distribution_release|lower }} universe"
+    state: present
+  become: yes
+
+
+- name: Install apt packages
+  become: yes
+  apt:
+    name:
+      - "{{ item }}"
+    state: present
+    update_cache: true
+  with_items: "{{ default_packages }}"

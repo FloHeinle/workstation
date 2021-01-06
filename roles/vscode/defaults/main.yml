@@ -1,0 +1,40 @@
+# Visual Studio Code version number (defaults to the latest version)
+visual_studio_code_version: ""
+
+visual_studio_code_package: "code"
+
+# Build (either "stable" or "insiders") https://code.visualstudio.com/insiders/
+# Ubuntu only (code-insiders isn't in Microsoft's RPM repo)
+visual_studio_code_build: stable
+
+# Directory to store files downloaded for Visual Studio Code installation
+visual_studio_code_download_dir: "{{ x_ansible_download_dir | default(ansible_env.HOME + '/.ansible/tmp/downloads') }}"
+
+# Mirror server for fetching the public keys and the Visual Studio Code
+# installation package. The URL may include directories. The URL must not end
+# with a trailing slash.
+visual_studio_code_mirror: "https://packages.microsoft.com"
+
+visual_studio_code_exe: "{{ visual_studio_code_package }}"
+
+visual_studio_code_extensions:
+  - castwide.solargraph
+  - coenraads.bracket-pair-colorizer-2
+  - davidanson.vscode-markdownlint
+  - dhoeric.ansible-vault
+  - eamodio.gitlens
+  - file-icons.file-icons
+  - hashicorp.terraform
+  - ms-azuretools.vscode-docker
+  - ms-kubernetes-tools.vscode-kubernetes-tools
+  - nhoizey.gremlins
+  - pinage404.better-readability-extension-pack
+  - rebornix.ruby
+  - redhat.vscode-yaml
+  - secanis.jenkinsfile-support
+  - shardulm94.trailing-spaces
+  - shd101wyy.markdown-preview-enhanced
+  - vscoss.vscode-ansible
+  - wholroyd.hcl
+  - wholroyd.jinja
+  - william-voyek.vscode-nginx

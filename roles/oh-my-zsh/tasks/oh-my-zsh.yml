@@ -1,0 +1,83 @@
+---
+
+- name: Clone oh-my-zsh
+  tags:
+    # Suppress warning: [ANSIBLE0006] git used in place of git module
+    # Git module doesn't allow us to set `core.autocrlf=input`.
+    - skip_ansible_lint
+  become: yes
+  become_user: "{{ username }}"
+  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
+  command: "git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh"
+  args:
+    chdir: "~{{ username }}"
+    creates: "~{{ username }}/.oh-my-zsh"
+
+- name: Check if powerlevel is already present
+  become: yes
+  become_user: "{{ username }}"
+  stat:
+    path: "~/.oh-my-zsh/themes/powerlevel10k"
+  register: powerlevel_theme_present
+
+- name: Add powerlevel10k theme
+  tags:
+    # Suppress warning: [ANSIBLE0006] git used in place of git module
+    # Git module doesn't allow us to set `core.autocrlf=input`.
+    - skip_ansible_lint
+  become: yes
+  become_user: "{{ username }}"
+  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
+  command: "git clone -c core.autocrlf=input --depth=1 https://github.com/romkatv/powerlevel10k.git .oh-my-zsh/themes/powerlevel10k"
+  args:
+    chdir: "~{{ username }}"
+  when: not powerlevel_theme_present.stat.exists
+
+- name: Copy powershell config
+  become: yes
+  become_user: "{{ username }}"
+  copy:
+    src: files/p10k.zsh
+    dest: ~/.p10k.zsh
+    mode:  "0744"
+
+- name: Create ~/.font
+  become: yes
+  become_user: "{{ username }}"
+  file:
+    path: ~/.fonts
+    state: directory
+    mode:  "0775"
+
+- name: Copy font files
+  become: yes
+  become_user: "{{ username }}"
+  copy:
+    src: files/fonts/
+    dest: ~/.fonts
+    mode:  "0744"
+
+- name: Set permissions of oh-my-zsh for user
+  become: yes
+  file:
+    path: "~{{ username }}/.oh-my-zsh"
+    # Prevent the cloned repository from having insecure permissions. Failing to do
+    # so causes compinit() calls to fail with "command not found: compdef" errors
+    # for users with insecure umasks (e.g., "002", allowing group writability).
+    mode: "go-w"
+    recurse: yes
+
+- name: Set default shell for user
+  become: yes
+  user:
+    name: "{{ username }}"
+    shell: /bin/zsh
+
+- name: Write .zshrc for user
+  become: yes
+  become_user: "{{ username }}"
+  template:
+    src: zshrc.j2
+    dest: "~{{ username }}/.zshrc"
+    backup: yes
+    mode: "u=rw,go=r"

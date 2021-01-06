@@ -1,0 +1,6 @@
+# Default theme
+oh_my_zsh_theme: powerlevel10k/powerlevel10k
+
+# Default plugins
+oh_my_zsh_plugins:
+  - git

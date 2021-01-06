@@ -1,0 +1,21 @@
+---
+
+- hosts: localhost
+  become: yes
+  tasks:
+    - import_role:
+        name: base
+    - import_role:
+        name: gnome-tweak-tool
+    - import_role:
+        name: oh-my-zsh
+    - import_role:
+        name: vscode
+    - import_role:
+        name: docker
+    - import_role:
+        name: kubectl
+    - import_role:
+        name: nextcloud-client
+    - import_role:
+        name: keepass-xc

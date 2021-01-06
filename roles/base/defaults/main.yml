@@ -1,0 +1,9 @@
+---
+
+default_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - git
+  - gnupg2
+  - zsh

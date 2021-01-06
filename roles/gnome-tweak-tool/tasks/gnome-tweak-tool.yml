@@ -1,0 +1,9 @@
+---
+
+- name: Install
+  become: yes
+  apt:
+    name:
+      - gnome-tweak-tool
+    state: present
+    update_cache: true

@@ -1,0 +1,28 @@
+---
+
+- name: Install key (apt)
+  become: yes
+  apt_key:
+    url: "{{ visual_studio_code_mirror }}/keys/microsoft.asc"
+    state: present
+
+- name: Install repo (apt)
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] {{ visual_studio_code_mirror }}/repos/vscode stable main"
+    filename: vscode
+    state: present
+
+- name: Install
+  become: yes
+  apt:
+    name: "{{ visual_studio_code_package }}{{ (visual_studio_code_version | length > 0) | ternary('=' + visual_studio_code_version, '') }}"
+    state: present
+
+- name: Install extensions
+  become: yes
+  become_user: "{{ username }}"
+  visual_studio_code_install_extension:
+    executable: "{{ visual_studio_code_exe }}"
+    name: "{{ item }}"
+  with_items: "{{ visual_studio_code_extensions }}"
