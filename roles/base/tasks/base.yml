@@ -4,18 +4,19 @@
   set_fact:
     username: "{{ lookup('env', 'USER') }}"
 
+- name: Set home
+  set_fact:
+    userhome: "{{ lookup('env', 'HOME') }}"
+
 - name: Ensure Ubuntu universe repo is enabled
   apt_repository:
     repo: "deb http://de.archive.ubuntu.com/ubuntu {{ ansible_distribution_release|lower }} universe"
     state: present
   become: yes
 
-
 - name: Install apt packages
   become: yes
   apt:
-    name:
-      - "{{ item }}"
+    name: "{{ default_packages }}"
     state: present
     update_cache: true
-  with_items: "{{ default_packages }}"
