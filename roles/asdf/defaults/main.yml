@@ -1,0 +1,36 @@
+---
+
+asdf_version: "v0.8.0"
+asdf_legacy_version_file: "yes"
+
+asdf_plugins:
+  - name: "ruby"
+    repository: ""
+    versions:
+      - 3.0.0
+    delete_versions: []
+    global: 3.0.0
+  - name: "nodejs"
+    repository: ""
+    versions:
+      - 14.15.4
+    delete_versions: []
+    global: 14.15.4
+  - name: "yarn"
+    repository: ""
+    versions:
+      - 1.22.5
+    delete_versions: []
+    global: 1.22.5
+
+asdf_global_dependencies: ["unzip", "git", "curl", "autoconf", "automake", "gcc",
+  "g++", "make", "patch", "pkg-config", "binutils", "libtool", "bison", "libreadline-dev"]
+
+asdf_optional_dependencies: []
+
+asdf_nodejs_dependencies: ["gpg", "dirmngr"]
+
+asdf_php_dependencies: ["re2c", "gettext", "libxml2-dev", "libbz2-dev", "libcurl4-openssl-dev", "zlib1g-dev",
+  "libicu-dev", "libjpeg-dev", "libpng-dev", "libwebp-dev", "libedit-dev", "libssl-dev", "libfreetype6-dev"]
+
+asdf_ruby_dependencies: ["libssl-dev", "libyaml-dev", "zlib1g-dev", "libncurses5-dev", "libffi-dev"]
